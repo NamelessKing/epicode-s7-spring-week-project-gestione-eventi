@@ -11,7 +11,7 @@ import it.epicode.gestioneeventi.exceptions.UnauthorizedException;
 import it.epicode.gestioneeventi.repositories.UsersRepository;
 import it.epicode.gestioneeventi.security.JWTTools;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,7 +23,8 @@ public class AuthService {
     @Autowired
     private JWTTools jwtTools;
 
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserResponseDTO register(RegisterDTO dto) {
         if (usersRepository.findByUsername(dto.username()).isPresent()) {
